@@ -1,9 +1,11 @@
+require('dotenv').config();
+
 const express = require('express')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const admin = require("./routes/Admin")
 const path = require('path')
-//const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
 const cgfApp = express()
 
@@ -20,6 +22,18 @@ cgfApp.set('view engine', 'handlebars')
 cgfApp.use(express.urlencoded({extended: true}));
 cgfApp.use(express.json());
 
+//Mongoose
+mongoose.Promise = global.Promise;
+
+
+const db = process.env.DB_URL
+
+mongoose.connect(db).then(() => {
+    console.log("conectado ao mongo")
+}).catch((err) => {
+    console.log("Erro ao se conectar ou mongo "+ err)
+})
+
 //Public
 cgfApp.use(express.static(path.join(__dirname, "public")))
 
@@ -35,7 +49,8 @@ cgfApp.get('/', (req, res) => {
 cgfApp.use('/admin', admin)
 
 
-const PORT = "PORT"
-cgfApp.listen(PORT, () => {
+const port = process.env.DB_PORT
+
+cgfApp.listen(port, () => {
     console.log("Server rodando")
 })
