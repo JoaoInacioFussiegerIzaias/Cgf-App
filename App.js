@@ -1,6 +1,7 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
+const admin = require("./routes/Admin")
 //const mongoose = require('mongoose')
 
 const cgfApp = express()
@@ -17,6 +18,16 @@ cgfApp.set('view engine', 'handlebars')
 //body-Parser
 cgfApp.use(express.urlencoded({extended: true}));
 cgfApp.use(express.json());
+
+//Rotas
+
+//Home
+cgfApp.get('/', (req, res) => {
+    res.send("home")
+})
+
+//Admin
+cgfApp.use('/admin', admin)
 
 const PORT = "PORT"
 cgfApp.listen(PORT, () => {
