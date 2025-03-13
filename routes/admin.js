@@ -6,7 +6,10 @@ router.get('/', (req, res) => {
 })
 
 router.get('/comentarios', (req, res) => {
-    res.send("pagina principal adm comentarios")
+    res.render("admin/comentarios")
 })
 
+router.get('/comentarios/add', (req, res) => {
+    res.render("admin/addcomentarios")
+})
 module.exports = router

@@ -35,7 +35,7 @@ cgfApp.get('/', (req, res) => {
 cgfApp.use('/admin', admin)
 
 
-const PORT = 3000
+const PORT = "PORT"
 cgfApp.listen(PORT, () => {
     console.log("Server rodando")
 })
