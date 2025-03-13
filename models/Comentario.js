@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const Comentario = new Schema({
     comentario: {
@@ -12,5 +12,4 @@ const Comentario = new Schema({
     }
 })
 
-
-//mongoose.model("comentarios", Comentario)
+mongoose.model("comentarios", Comentario)

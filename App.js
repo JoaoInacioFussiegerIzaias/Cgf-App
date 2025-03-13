@@ -22,12 +22,9 @@ cgfApp.set('view engine', 'handlebars')
 cgfApp.use(express.urlencoded({extended: true}));
 cgfApp.use(express.json());
 
-//Mongoose
+//Mongoose connection
 mongoose.Promise = global.Promise;
-
-
 const db = process.env.DB_URL
-
 mongoose.connect(db).then(() => {
     console.log("conectado ao mongo")
 }).catch((err) => {
@@ -38,7 +35,6 @@ mongoose.connect(db).then(() => {
 cgfApp.use(express.static(path.join(__dirname, "public")))
 
 //Rotas
-
 
 //Home
 cgfApp.get('/', (req, res) => {
