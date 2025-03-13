@@ -6,8 +6,29 @@ const bodyParser = require('body-parser')
 const admin = require("./routes/Admin")
 const path = require('path')
 const mongoose = require('mongoose')
+const session = require('express-session')
+const flash = require('connect-flash')
 
 const cgfApp = express()
+
+const secret = process.env.SESSESSION_SECRET
+cgfApp.use(session({
+    secret: secret,
+    resave: true,
+    saveUninitialized: true
+}))
+cgfApp.use(flash())
+
+//Middleware
+cgfApp.use((req,res,next) =>{
+    res.locals.success_msg = req.flash("success_msg")
+    res.locals.error_msg = req.flash("error_msg")
+    next()
+})
+
+//Body-Parser
+cgfApp.use(express.urlencoded({extended: true}));
+cgfApp.use(express.json());
 
 // Tamplete Engine
 cgfApp.engine('handlebars', handlebars.engine ({
@@ -18,9 +39,7 @@ cgfApp.engine('handlebars', handlebars.engine ({
 }))
 cgfApp.set('view engine', 'handlebars')
 
-//body-Parser
-cgfApp.use(express.urlencoded({extended: true}));
-cgfApp.use(express.json());
+
 
 //Mongoose connection
 mongoose.Promise = global.Promise;
