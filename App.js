@@ -2,6 +2,7 @@ const express = require('express')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const admin = require("./routes/Admin")
+const path = require('path')
 //const mongoose = require('mongoose')
 
 const cgfApp = express()
@@ -19,7 +20,11 @@ cgfApp.set('view engine', 'handlebars')
 cgfApp.use(express.urlencoded({extended: true}));
 cgfApp.use(express.json());
 
+//Public
+cgfApp.use(express.static(path.join(__dirname, "public")))
+
 //Rotas
+
 
 //Home
 cgfApp.get('/', (req, res) => {
@@ -29,7 +34,8 @@ cgfApp.get('/', (req, res) => {
 //Admin
 cgfApp.use('/admin', admin)
 
-const PORT = "PORT"
+
+const PORT = 3000
 cgfApp.listen(PORT, () => {
     console.log("Server rodando")
 })
