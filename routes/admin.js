@@ -12,19 +12,40 @@ router.get('/comentarios', (req, res) => {
     res.render("admin/comentarios")
 })
 
-router.get('/comentarios/add', (req, res) => {
+router.get('/new/comentario', (req, res) => {
     res.render("admin/addcomentarios")
 })
 
 router.post("/new/comentario", (req, res) =>{
-    const newComentario = {
-        comentario: req.body.comentario
+    
+    var erros = []
+    
+    if (!req.body.comentario || typeof req.body.comentario == undefined|| req.body.comentario == null){
+        erros.push({texto: "Comentário inválido"})
     }
-    new Comentario(newComentario).save().then(() => {
-        console.log("Comentario cadastrado com sucesso")
-    }).catch((err) => {
-        console.log("Erro ao salvar comentario")
-    })
+    
+    if(req.body.comentario.length < 2){
+        erros.push({texto: "Comentario precisa ter mais de 6 caracteres!"})
+    }
+
+    if(erros.length > 0){  
+        res.render("admin/addcomentarios", {erros: erros})
+    } else {
+
+        const newComentario = {
+            comentario: req.body.comentario
+        }
+    
+    
+        new Comentario(newComentario).save().then(() => {
+            req.flash("success_msg", "Comentario adicionado")
+            res.redirect("/admin/comentarios")
+        }).catch((err) => {
+            req.flash("error_msg", "Houve um erro au comentar")
+            res.redirect("/admin/comentarios")
+        })
+    }
+
 })
 
 module.exports = router
