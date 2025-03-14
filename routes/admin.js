@@ -25,43 +25,97 @@ router.get('/comentarios', (req, res) => {
 
 //Rota para fazer um novo comentario
 router.get('/new/comentario', (req, res) => {
-    res.render("admin/addcomentarios")
+    res.render("admin/newcomentarios")
 })
 
 //Rota de envio de dados para o banco 
 router.post("/new/comentario", (req, res) =>{
-    
-    //um array para verificar se houver um erro
-    var erros = []
-    
-    //verifica: se tiver comentario, se o comentario foir undefined ou nulo
-    if (!req.body.comentario || typeof req.body.comentario == undefined|| req.body.comentario == null){
-        erros.push({texto: "Comentário inválido"})
-    }
-    
-    // Nao permite comentaris menores que 6 letras
-    if(req.body.comentario.length < 6){
-        erros.push({texto: "Comentario precisa ter mais de 6 caracteres!"})
-    }
+    const {comentario} = req.body
+
+    // Passa o comentário para a função Verificar
+    const erros = Verificar(comentario) 
+
+    console.log(erros)
 
     //se ouver algum erro
-    if(erros.length > 0){  
-        res.render("admin/addcomentarios", {erros: erros})
-    } else {
-
-        const newComentario = {
-            comentario: req.body.comentario
-        }
+    if(erros.length == 0){  
+        const newComentario =  { comentario }
     
-        new Comentario(newComentario).save().then(() => {
-            req.flash("success_msg", "Comentario adicionado")
-            res.redirect("/admin/comentarios")
-        }).catch((err) => {
-            req.flash("error_msg", "Houve um erro au comentar")
-            res.redirect("/admin/comentarios")
-        })
+        new Comentario(newComentario).save()
+            .then(() => {
+                req.flash("success_msg", "Comentario adicionado")
+                res.redirect("/admin/comentarios")
+            }).catch((err) => {
+                req.flash("error_msg", "Houve um erro au comentar")
+                res.render("admin/newcomentarios", {erros: erros, comentario: comentario})
+            })
+    } else {
+        req.flash("error_msg", "Houve um erro au comentar")
+        res.render("admin/newcomentarios", {erros: erros, comentario: comentario})
     }
 
+    // Se não houver erros, cria o novo comentário
+    
 })
+
+//Rota para editar comentario
+router.get("/edit/comentario/:id", (req,res) => {
+    Comentario.findOne({_id:req.params.id}).lean()
+    .then((comentario) => {
+            res.render("admin/editcomentario", {comentario: comentario}) 
+        }).catch((err) =>{
+            req.flash("error_msg", "Esse comentario não existe")
+            res.redirect("/admin/comentarios")
+        })
+})
+
+//Rota para editar o comentario
+router.post("/edit/comentario", (req,res) => {
+    const {comentario, id} = req.body
+    console.log(req.body)
+    // Passa o comentário para a função Verificar
+    const erros = Verificar(comentario) 
+
+    //if para saber se ha algum erro
+    if (erros.length > 0){
+        req.flash("error_msg", "O comentário precisa ter mais de 6 caracteres!");
+        return res.redirect(`/admin/edit/comentario/${id}`, );
+    } else {
+        Comentario.findOne({_id: id}).then((comentarioAlterado) => {
+            if (!comentarioAlterado) {
+                req.flash("error_msg", "Houve um erro ao editar cadastro")
+                res.render("/admin/comentarios", {erros: erros, comentario: comentario, id: id})
+            }
+
+            comentarioAlterado.comentario = comentario
+
+            // Salvando o comentário alterado
+            comentarioAlterado.save().then(() => {
+                req.flash("success_msg", "Comentario editado")
+                res.redirect("/admin/comentarios")
+            }).catch((err) =>{
+                req.flash("error_mdg", "Houve um erro ao editar a categoria")
+                res.render("/admin/comentarios", {erros: erros, comentario: comentario, id: id});
+            })
+        
+        }).catch((err) => {
+            req.flash("error_mdg", "Houve um erro ao editar a categoria")
+            res.render("/admin/comentarios", {erros: erros, comentario: comentario, id: id});
+        })
+
+    }
+})
+
+function Verificar(comentario){
+
+    //um array para verificar se houver um erro
+    let erros = []
+
+    //verifica: se tiver comentario, se o comentario foir undefined ou nulo ou Nao permite comentaris menores que 6 letras
+    if (!comentario || typeof comentario !== 'string' ||comentario.trim().length < 6  ){
+        erros.push({ texto: "O comentário precisa ter mais de 6 caracteres!" });
+    }
+    return erros;
+}
 
 module.exports = router

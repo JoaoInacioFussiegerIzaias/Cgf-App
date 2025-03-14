@@ -5,7 +5,8 @@
 {{#each comentarios}}
     <div class="card mt-4">
         <div class="card-body">
-            <h4>{{comentario}}</h4> <small>Data de criação {{data}}</small>
+            <h4>{{comentario}}</h4> <small>Data de criação {{data}}</small><br>
+            <a href="/admin/edit/comentario/{{_id}}"><button class="btn btn-success mt-2">Editar</button></a>
         </div>
     </div>
 {{else}}
