@@ -1,3 +1,13 @@
 <h1>Comentarios sobre: </h1>
 <hr>
 <a href="/admin/new/comentario"><button class="btn btn-success">Comentar</button></a>
+
+{{#each comentarios}}
+    <div class="card mt-4">
+        <div class="card-body">
+            <h4>{{comentario}}</h4> <small>Data de criação {{data}}</small>
+        </div>
+    </div>
+{{else}}
+
+{{/each}}
