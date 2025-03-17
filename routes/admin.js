@@ -94,7 +94,7 @@ router.post("/edit/comentario", (req,res) => {
                 req.flash("success_msg", "Comentario editado")
                 res.redirect("/admin/comentarios")
             }).catch((err) =>{
-                req.flash("error_mdg", "Houve um erro ao editar a categoria")
+                req.flash("error_msg", "Houve um erro ao editar a categoria")
                 res.render("/admin/comentarios", {erros: erros, comentario: comentario, id: id});
             })
         
@@ -104,6 +104,16 @@ router.post("/edit/comentario", (req,res) => {
         })
 
     }
+})
+
+router.post("/delete/comentario", (req,res) => {
+    Comentario.deleteOne({_id: req.body.id}).then(() =>{
+        req.flash("success_msg", "Comentario deletado com sucesso")
+        res.redirect("/admin/comentarios")
+    }).catch((err) => {
+        req.flash("error_msg", "Houve um erro ao deletar o comentario" + err)
+        res.redirect("/admin/comentario")
+    })
 })
 
 function Verificar(comentario){

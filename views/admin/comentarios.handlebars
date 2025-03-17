@@ -7,8 +7,12 @@
         <div class="card-body">
             <h4>{{comentario}}</h4> <small>Data de criação {{data}}</small><br>
             <a href="/admin/edit/comentario/{{_id}}"><button class="btn btn-success mt-2">Editar</button></a>
+            <form action="/admin/delete/comentario" method="POST">
+                <input type="hidden" name="id" value="{{_id}}">
+                <button type="submit" class="btn btn-danger mt-2">Deletar</button>
+            </form>
         </div>
     </div>
 {{else}}
-
+    <h2 class="">Nem um comentarios postado</h2>
 {{/each}}
