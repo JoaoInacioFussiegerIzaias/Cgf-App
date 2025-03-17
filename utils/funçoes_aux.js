@@ -1,6 +1,6 @@
 //-------------------------------------- Função para verificar comentario ----------------------------------------------// 
 
-function Verificar(comentario){
+function Verificar_comentario(comentario){
 
     //um array para verificar se houver um erro
     let erros = []
@@ -12,6 +12,10 @@ function Verificar(comentario){
     return erros;
 }
 
-module.exports = Verificar;
+module.exports = Verificar_comentario;
 
 //-------------------------------------- -------------------------------- ----------------------------------------------// 
+
+function Verificar_maquina(maquina){
+    if
+}

@@ -1,0 +1,24 @@
+<h1>Lista de Máquinas</h1>
+<hr>
+<a href="/admin/new/maquina"><button class="btn btn-success">Nova Máquina</button></a>
+
+{{#each maquinas}}
+    <div class="card mt-4">
+        <div class="card-body ">
+            <h1>{{modelo}}</h1>  
+            <p>{{marca}}</p>
+            <p>{{peso}}</p>
+            <p>{{potencia}}</p>
+            <p>{{largura}}</p>
+            <p>{{altura}}</p>
+            <small>{{data}}</small><br>
+            <a href="/admin/edit/maquina/{{_id}}"><button class="btn btn-success mt-2">Editar</button></a>
+            <form action="/admin/delete/maquina" method="POST">
+                <input type="hidden" name="id" value="{{_id}}">
+                <button type="submit" class="btn btn-danger mt-2">Deletar</button>
+            </form>
+        </div>
+    </div>
+{{else}}
+    <h2 class="mt-2">Nenhuma máquina cadastrada</h2>
+{{/each}}

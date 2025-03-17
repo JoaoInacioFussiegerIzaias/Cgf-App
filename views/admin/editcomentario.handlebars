@@ -7,7 +7,7 @@
 <div class="card">
     <div class="card-body">
     <form action="/admin/edit/comentario" method="POST">
-    <input type="hidden" name="id" value="{{comentario._id}}">
+        <input type="hidden" name="id" value="{{comentario._id}}">
         <label for="comentario">Comentar</label>
         <input type="text" id="comentario" name="comentario" placeholder="Comente aqui" class="form-control" value="{{comentario.comentario}}">
         <a href=""><button class="submit btn btn-success form-control mt-4" >Comentar</button></a>  

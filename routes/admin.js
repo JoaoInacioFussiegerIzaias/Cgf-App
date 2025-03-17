@@ -2,15 +2,17 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require("mongoose")
 require("../models/Comentario")
-const Verificar = require("../utils/funçoes_aux")
-
-//my model
-const Comentario = mongoose.model("comentarios")
+const Comentario = mongoose.model("comentarios") //Model Comentario
+require("../models/Maquina")
+const Maquina = mongoose.model("maquinas") //Model Maquina
+const Verificar_comentario = require('../utils/funçoes_aux')
 
 //Pagina principal do adm
 router.get('/', (req, res) => {
     res.render("admin/index")
 })
+
+// ------------------------------------------ Rotas Comentarios ------------------------------------- //
 
 // All comentarios
 router.get('/comentarios', (req, res) => {
@@ -34,13 +36,12 @@ router.post("/new/comentario", (req, res) =>{
     const {comentario} = req.body
 
     // Passa o comentário para a função Verificar
-    const erros = Verificar(comentario) 
-
-    console.log(erros)
+    const erros = Verificar_comentario(comentario) 
 
     //se ouver algum erro
     if(erros.length == 0){  
-        const newComentario =  { comentario }
+        const newComentario =  { 
+            comentario }
     
         new Comentario(newComentario).save()
             .then(() => {
@@ -73,9 +74,9 @@ router.get("/edit/comentario/:id", (req,res) => {
 //Rota para editar o comentario
 router.post("/edit/comentario", (req,res) => {
     const {comentario, id} = req.body
-    console.log(req.body)
+    
     // Passa o comentário para a função Verificar
-    const erros = Verificar(comentario) 
+    const erros = Verificar_comentario(comentario) 
 
     //if para saber se ha algum erro
     if (erros.length > 0){
@@ -114,6 +115,75 @@ router.post("/delete/comentario", (req,res) => {
     }).catch((err) => {
         req.flash("error_msg", "Houve um erro ao deletar o comentario" + err)
         res.redirect("/admin/comentario")
+    })
+})
+
+// ------------------------------------- Rotas Maquinas ------------------------------------- //
+
+router.get("/maquinas", (req,res) =>{
+    Maquina.find().sort({data: 'desc'}).lean().then((maquinas) =>{
+        res.render("admin/maquinas", {maquinas: maquinas})
+    }).catch((err)=> {
+        req.flash("error_msg", "Houve um erro ao tentar listar a pagina")
+        res.redirect("/admin")
+    })
+})
+router.get("/new/maquina", (req,res) =>{
+    res.render("admin/newmaquina")
+})
+
+router.post("/new/maquina", (req,res) =>{
+    const { modelo, marca, peso, potencia, largura, altura} = req.body
+
+    const erros = Verificar_comentario(modelo, marca, peso, potencia, largura, altura) 
+
+    console.log(modelo, marca, peso, potencia, largura, altura)
+
+    if(erros.length == 0){
+        res.render("admin/newmaquinas")
+    
+        const newMaquina = {
+            modelo,
+            marca,
+            peso,
+            potencia,
+            largura,
+            altura
+        }
+
+        new Maquina(newMaquina).save().then(() =>{
+            req.flash("success_msg", "Maquina criada com sucesso")
+            res.redirect("/admin/maquinas")
+        }).catch(() =>{
+            req.flash("error_msg", "Houve um erro ou salvar maquina")
+            res.render("/admin/newmaquina", {erros: erros, modelo:modelo, marca:marca, peso:peso, potencia:potencia, largura:largura, altura:altura})
+        })
+    } else {
+        req.flash("error_msg", "Houve um erro ou salvar maquina")
+        res.render("/admin/newmaquina", {erros: erros, modelo:modelo, marca:marca, peso:peso, potencia:potencia, largura:largura, altura:altura})
+    }
+})
+
+router.get("/edit/maquina/:id", (req,res) => {
+    Maquina.findOne({_id: req.params.id}).lean()
+    .then((maquina) => {
+            res.render("admin/editmaquina", {maquina: maquina}) 
+        }).catch((err) =>{
+            req.flash("error_msg", "Essa máquina não existe")
+            res.redirect("/admin/maquinas")
+        })
+})
+
+// post para editar maquinas //
+
+
+router.post("/delete/maquina", (req,res) => {
+    Maquina.deleteOne({_id: req.body.id}).then(() =>{
+        req.flash("success_msg", "Maquina deletada com sucesso")
+        res.redirect("/admin/maquinas")
+    }).catch((err) => {
+        req.flash("error_msg", "Houve um erro ao deletar o maquina" + err)
+        res.redirect("/admin/maquinas")
     })
 })
 

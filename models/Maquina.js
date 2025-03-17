@@ -8,7 +8,7 @@ const Maquina = new Schema({
     },
     marca:{
         type: String,
-        required: trusted
+        required: true
     },
     peso:{
         type: Number,
@@ -25,6 +25,10 @@ const Maquina = new Schema({
     altura:{
         type: Number,
         required: true
+    },
+    data: {
+        type: Date,
+        default: Date.now()
     }
 })
 
