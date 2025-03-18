@@ -49,11 +49,11 @@ router.post("/new/comentario", (req, res) =>{
                 res.redirect("/admin/comentarios")
             }).catch((err) => {
                 req.flash("error_msg", "Houve um erro au comentar")
-                res.render("admin/newcomentarios", {erros: erros, comentario: comentario})
+                res.render("admin/newcomentarios", {erros, comentario})
             })
     } else {
         req.flash("error_msg", "Houve um erro au comentar")
-        res.render("admin/newcomentarios", {erros: erros, comentario: comentario})
+        res.render("admin/newcomentarios", {erros, comentario})
     }
 })
 
@@ -77,26 +77,28 @@ router.post("/edit/comentario", (req,res) => {
 
     //if para saber se ha algum erro
     if (erros.length == 0){
-        Comentario.findOne({_id: id}).then((comentarioAlterado) => {
-            if (!comentarioAlterado) {
-                req.flash("error_msg", "Houve um erro ao editar cadastro")
-                res.render("/admin/comentarios", {erros: erros, comentario: comentario, id: id})
+        Comentario.findOne({_id: id}).then((comentario_alterado) => {
+            if (!comentario_alterado) {
+                req.flash("error_msg", "Houve um erro ao editar comentário")
+                res.render("/admin/comentarios", {erros, comentario, id})
             }
 
-            comentarioAlterado.comentario = comentario
+            // Atualiza os dados do comentário
+            
+            comentario_alterado.comentario = comentario;
 
             // Salvando o comentário alterado
-            comentarioAlterado.save().then(() => {
+            comentario_alterado.save().then(() => {
                 req.flash("success_msg", "Comentario editado")
                 res.redirect("/admin/comentarios")
             }).catch((err) =>{
-                req.flash("error_msg", "Houve um erro ao editar a categoria")
-                res.render("/admin/comentarios", {erros: erros, comentario: comentario, id: id});
+                req.flash("error_msg", "Houve um erro ao editar a comentário")
+                res.render("/admin/comentarios", {erros, comentario, id});
             })
         
         }).catch((err) => {
-            req.flash("error_mdg", "Houve um erro ao editar a categoria")
-            res.render("/admin/comentarios", {erros: erros, comentario: comentario, id: id});
+            req.flash("error_mdg", "Houve um erro ao editar o comentário")
+            res.render("/admin/comentarios", {erros, comentario, id});
         })
 
     } else {
@@ -149,11 +151,11 @@ router.post("/new/maquina", (req,res) =>{
             res.redirect("/admin/maquinas")
         }).catch(() =>{
             req.flash("error_msg", "Houve um erro ou salvar maquina")
-            res.render("admin/newmaquina", {erros: erros, modelo:modelo, marca:marca, peso:peso, potencia:potencia, largura:largura, altura:altura})
+            res.render("admin/newmaquina", {erros, modelo, marca, peso, potencia, largura, altura})
         })
     } else {
         req.flash("error_msg", "Houve um erro ou salvar maquina")
-        res.render("admin/newmaquina", {erros: erros, modelo, marca, peso, potencia, largura, altura})
+        res.render("admin/newmaquina", {erros, modelo, marca, peso, potencia, largura, altura})
     }
 })
 
@@ -172,10 +174,38 @@ router.post("/edit/maquina", (req,res) =>{
 
     const erros = Verificar_maquina({modelo, marca, peso, potencia, largura, altura})
 
-    if (erros.length > 0){
-        req.flash("error_msg", "");
-        return res.redirect(`/admin/edit/maquina/${id}`);
+    if (erros.length == 0){
+        Maquina.findOne({_id: id}).then((maquina_alterada) =>{
+            if (!maquina_alterada) {
+                req.flash("error_msg", "Houve um erro ao editar maquina")
+                res.render("admin/maquinas" , {erros, modelo, marca, peso, potencia, largura, altura, id})
+            }
+
+            // Atualiza os dados da maquina
+
+            maquina_alterada.modelo = modelo;
+            maquina_alterada.marca = marca;
+            maquina_alterada.peso = peso;
+            maquina_alterada.potencia = potencia;
+            maquina_alterada.largura = largura;
+            maquina_alterada.altura = altura;
+            
+            maquina_alterada.save().then(() => {
+                req.flash("success_msg", "Maquina editada")
+                res.redirect("/admin/maquinas")
+            }).catch((err) =>{
+                req.flash("error_msg", "Houve um erro ao tentar editar")
+                res.render("/admin/maquinas", {erros, modelo, marca, peso, potencia, largura, altura, id})
+            })
+
+        }).catch((err) =>{
+            req.flash("error_msg", "Houve um erro ao tentar editar a maquina")
+            res.render("admin/maquinas" , {erros, modelo, marca, peso, potencia, largura, altura, id})
+        })
+        
     } else {
+        req.flash("error_msg",  erros[0]["texto"]);
+        return res.redirect(`/admin/edit/maquina/${id}`, );
     }
 })
 

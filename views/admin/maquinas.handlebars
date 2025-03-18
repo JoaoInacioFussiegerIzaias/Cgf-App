@@ -2,23 +2,37 @@
 <hr>
 <a href="/admin/new/maquina"><button class="btn btn-success">Nova Máquina</button></a>
 
-{{#each maquinas}}
-    <div class="card mt-4">
-        <div class="card-body ">
-            <h1>{{modelo}}</h1>  
-            <p>{{marca}}</p>
-            <p>{{peso}}</p>
-            <p>{{potencia}}</p>
-            <p>{{largura}}</p>
-            <p>{{altura}}</p>
-            <small>{{data}}</small><br>
-            <a href="/admin/edit/maquina/{{_id}}"><button class="btn btn-success mt-2">Editar</button></a>
-            <form action="/admin/delete/maquina" method="POST">
-                <input type="hidden" name="id" value="{{_id}}">
-                <button type="submit" class="btn btn-danger mt-2">Deletar</button>
-            </form>
+<div class="row mt-4">
+    {{#each maquinas}}
+    <div class="col-12 col-sm-6 col-md-4 mb-4"> <!-- Ajuste para várias colunas -->
+        <div class="card p-3">
+            <!-- Modelo e Marca -->
+            <h1>{{modelo}}</h1>
+            <p><strong>Marca:</strong> {{marca}}</p>
+
+            <!-- Peso -->
+            <p><strong>Peso:</strong> {{peso}} kg</p>
+
+            <!-- Potência -->
+            <p><strong>Potência:</strong> {{potencia}} kw</p>
+
+            <!-- Largura -->
+            <p><strong>Largura:</strong> {{largura}} mm</p>
+
+            <!-- Altura -->
+            <p><strong>Altura:</strong> {{altura}} mm</p>
+
+            <!-- Botões de Editar e Deletar -->
+            <div class="d-flex justify-content-between mt-3">
+                <a href="/admin/edit/maquina/{{_id}}"><button class="btn btn-success btn-sm">Editar</button></a>
+                <form action="/admin/delete/maquina" method="POST" class="d-inline">
+                    <input type="hidden" name="id" value="{{_id}}">
+                    <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+                </form>
+            </div>
         </div>
     </div>
-{{else}}
+    {{else}}
     <h2 class="mt-2">Nenhuma máquina cadastrada</h2>
-{{/each}}
+    {{/each}}
+</div>

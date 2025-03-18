@@ -20,29 +20,36 @@ function Verificar_maquina(maquina) {
 
     if (!modelo || typeof modelo !== 'string' || modelo.trim().length === 0) {
         erros.push({ texto: "Modelo não pode estar vazio" });
+        return erros;
     }
 
     if (!marca || typeof marca !== 'string' || marca.trim().length === 0) {
         erros.push({ texto: "Marca não pode estar vazia" });
+        return erros;
     }
 
     if (!peso || isNaN(peso) || parseFloat(peso) <= 0) {
-        erros.push({ texto: "Peso deve ser um número válido e maior que zero" });
+        erros.push({ texto: "Peso deve ser um número válido" });
+        return erros;
     }
 
     if (!potencia || isNaN(potencia) || parseFloat(potencia) <= 0) {
-        erros.push({ texto: "Potência deve ser um número válido e maior que zero" });
+        erros.push({ texto: "Potência deve ser um número válido " });
+        return erros;
     }
 
     if (!largura || isNaN(largura) || parseFloat(largura) <= 0) {
-        erros.push({ texto: "Largura deve ser um número válido e maior que zero" });
+        erros.push({ texto: "Largura deve ser um número válido" });
+        return erros;
     }
 
     if (!altura || isNaN(altura) || parseFloat(altura) <= 0) {
-        erros.push({ texto: "Altura deve ser um número válido e maior que zero" });
+        erros.push({ texto: "Altura deve ser um número válido" });
+        return erros;
     }
 
     return erros;
+    
 }
 
 
