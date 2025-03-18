@@ -52,8 +52,6 @@ function Verificar_maquina(maquina) {
     
 }
 
-
-
 module.exports = {
     Verificar_comentario,
     Verificar_maquina
