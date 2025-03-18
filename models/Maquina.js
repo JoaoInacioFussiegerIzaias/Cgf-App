@@ -19,7 +19,7 @@ const Maquina = new Schema({
         required: true
     },
     largura:{
-        type: Number,
+        type: String,
         required: true
     },
     altura:{

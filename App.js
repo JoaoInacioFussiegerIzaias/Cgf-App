@@ -57,7 +57,7 @@ cgfApp.use(express.static(path.join(__dirname, "public")))
 
 //Home
 cgfApp.get('/', (req, res) => {
-    res.send("home")
+    res.render("index")
 })
 
 //Admin

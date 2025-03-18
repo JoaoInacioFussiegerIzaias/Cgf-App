@@ -38,7 +38,7 @@ function Verificar_maquina(maquina) {
         return erros;
     }
 
-    if (!largura || isNaN(largura) || parseFloat(largura) <= 0) {
+    if (!largura|| typeof largura !== 'string' || largura.trim().length === 0) {
         erros.push({ texto: "Largura deve ser um número válido" });
         return erros;
     }
