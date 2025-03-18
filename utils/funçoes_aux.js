@@ -17,5 +17,15 @@ module.exports = Verificar_comentario;
 //-------------------------------------- -------------------------------- ----------------------------------------------// 
 
 function Verificar_maquina(maquina){
-    if
+    const {modelo, marca, peso, potencia, largura, altura} = maquina
+
+    let erros = []
+
+    if( !modelo || !marca || !peso || !potencia || !largura || !altura){
+        erros.push({texto: "Prencha todos os campos"})
+    }
+    return erros;
 }
+
+module.exports = Verificar_maquina;
+

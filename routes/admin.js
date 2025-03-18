@@ -6,6 +6,7 @@ const Comentario = mongoose.model("comentarios") //Model Comentario
 require("../models/Maquina")
 const Maquina = mongoose.model("maquinas") //Model Maquina
 const Verificar_comentario = require('../utils/funçoes_aux')
+const Verificar_maquina = require("../utils/funçoes_aux")
 
 //Pagina principal do adm
 router.get('/', (req, res) => {
@@ -135,12 +136,12 @@ router.get("/new/maquina", (req,res) =>{
 router.post("/new/maquina", (req,res) =>{
     const { modelo, marca, peso, potencia, largura, altura} = req.body
 
-    const erros = Verificar_comentario(modelo, marca, peso, potencia, largura, altura) 
+    const erros = Verificar_maquina(modelo, marca, peso, potencia, largura, altura) 
 
     console.log(modelo, marca, peso, potencia, largura, altura)
 
     if(erros.length == 0){
-        res.render("admin/newmaquinas")
+        res.render("admin/newmaquina")
     
         const newMaquina = {
             modelo,
@@ -156,11 +157,11 @@ router.post("/new/maquina", (req,res) =>{
             res.redirect("/admin/maquinas")
         }).catch(() =>{
             req.flash("error_msg", "Houve um erro ou salvar maquina")
-            res.render("/admin/newmaquina", {erros: erros, modelo:modelo, marca:marca, peso:peso, potencia:potencia, largura:largura, altura:altura})
+            res.render("admin/newmaquina", {erros: erros, modelo:modelo, marca:marca, peso:peso, potencia:potencia, largura:largura, altura:altura})
         })
     } else {
         req.flash("error_msg", "Houve um erro ou salvar maquina")
-        res.render("/admin/newmaquina", {erros: erros, modelo:modelo, marca:marca, peso:peso, potencia:potencia, largura:largura, altura:altura})
+        res.render("admin/newmaquina", {erros: erros, modelo, marca, peso, potencia, largura, altura})
     }
 })
 
