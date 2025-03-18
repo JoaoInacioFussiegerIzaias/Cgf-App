@@ -164,7 +164,7 @@ router.get("/edit/maquina/:id", (req,res) => {
     .then((maquina) => {
             res.render("admin/editmaquina", {maquina: maquina}) 
         }).catch((err) =>{
-            req.flash("error_msg", "Essa máquina não existe")
+            req.flash("error_msg", "Essa máquina não existe" )
             res.redirect("/admin/maquinas")
         })
 })
