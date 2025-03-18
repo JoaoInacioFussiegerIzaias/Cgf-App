@@ -5,8 +5,7 @@ require("../models/Comentario")
 const Comentario = mongoose.model("comentarios") //Model Comentario
 require("../models/Maquina")
 const Maquina = mongoose.model("maquinas") //Model Maquina
-const Verificar_comentario = require('../utils/funçoes_aux')
-const Verificar_maquina = require("../utils/funçoes_aux")
+const { Verificar_comentario, Verificar_maquina } = require('../utils/funçoes_aux');
 
 //Pagina principal do adm
 router.get('/', (req, res) => {
@@ -56,9 +55,6 @@ router.post("/new/comentario", (req, res) =>{
         req.flash("error_msg", "Houve um erro au comentar")
         res.render("admin/newcomentarios", {erros: erros, comentario: comentario})
     }
-
-    // Se não houver erros, cria o novo comentário
-    
 })
 
 //Rota para editar comentario
@@ -80,10 +76,7 @@ router.post("/edit/comentario", (req,res) => {
     const erros = Verificar_comentario(comentario) 
 
     //if para saber se ha algum erro
-    if (erros.length > 0){
-        req.flash("error_msg", "O comentário precisa ter mais de 6 caracteres!");
-        return res.redirect(`/admin/edit/comentario/${id}`, );
-    } else {
+    if (erros.length == 0){
         Comentario.findOne({_id: id}).then((comentarioAlterado) => {
             if (!comentarioAlterado) {
                 req.flash("error_msg", "Houve um erro ao editar cadastro")
@@ -106,6 +99,9 @@ router.post("/edit/comentario", (req,res) => {
             res.render("/admin/comentarios", {erros: erros, comentario: comentario, id: id});
         })
 
+    } else {
+        req.flash("error_msg", "O comentário precisa ter mais de 6 caracteres!");
+        return res.redirect(`/admin/edit/comentario/${id}`);
     }
 })
 
@@ -134,15 +130,11 @@ router.get("/new/maquina", (req,res) =>{
 })
 
 router.post("/new/maquina", (req,res) =>{
+
     const { modelo, marca, peso, potencia, largura, altura} = req.body
-
-    const erros = Verificar_maquina(modelo, marca, peso, potencia, largura, altura) 
-
-    console.log(modelo, marca, peso, potencia, largura, altura)
+    const erros = Verificar_maquina({modelo, marca, peso, potencia, largura, altura}) 
 
     if(erros.length == 0){
-        res.render("admin/newmaquina")
-    
         const newMaquina = {
             modelo,
             marca,
@@ -175,7 +167,17 @@ router.get("/edit/maquina/:id", (req,res) => {
         })
 })
 
-// post para editar maquinas //
+router.post("/edit/maquina", (req,res) =>{
+    const { modelo, marca, peso, potencia, largura, altura, id} = req.body
+
+    const erros = Verificar_maquina({modelo, marca, peso, potencia, largura, altura})
+
+    if (erros.length > 0){
+        req.flash("error_msg", "");
+        return res.redirect(`/admin/edit/maquina/${id}`);
+    } else {
+    }
+})
 
 
 router.post("/delete/maquina", (req,res) => {
