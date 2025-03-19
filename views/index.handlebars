@@ -1,1 +1,27 @@
-<h2>Pagina home</h2>
+<div class="row mt-4">
+    {{#each maquinas}}
+    <div class="col-12 col-sm-6 col-md-4 mb-4"> <!-- Ajuste para várias colunas -->
+        <div class="card p-2">
+            <img src="https://www.guiasobratema.org.br/Imagens/Fotos/DSC06274-2_recortada.png" alt="YAMAHA VIO17">
+            <!-- Modelo e Marca -->
+            <h1>{{modelo}}</h1>
+            <p><strong>Marca:</strong> {{marca}}</p>
+
+            <!-- Peso -->
+            <p><strong>Peso:</strong> {{peso}} (kg)</p>
+
+            <!-- Potência -->
+            <p><strong>Potência:</strong> {{potencia}} (kw)</p>
+
+            <!-- Altura -->
+            <p><strong>Altura:</strong> {{altura}} (mm)</p>
+
+            <!-- Largura -->
+            <p><strong>Largura:</strong> {{largura}} (mm)</p>
+        </div>
+    </div>
+    {{else}}
+    <h2 class="mt-2">Nenhuma máquina cadastrada</h2>
+    {{/each}}
+</div>
+<a href="#"><button class="btn btn-secondary">Solicitar orçamento</button></a>

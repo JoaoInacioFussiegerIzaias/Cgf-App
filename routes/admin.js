@@ -127,6 +127,7 @@ router.get("/maquinas", (req,res) =>{
         res.redirect("/admin")
     })
 })
+
 router.get("/new/maquina", (req,res) =>{
     res.render("admin/newmaquina")
 })
