@@ -5,7 +5,7 @@ require("../models/Comentario")
 const Comentario = mongoose.model("comentarios") //Model Comentario
 require("../models/Maquina")
 const Maquina = mongoose.model("maquinas") //Model Maquina
-const { Verificar_comentario, Verificar_maquina } = require('../utils/funçoes_aux');
+const { Verificar_comentario, Verificar_maquina} = require('../utils/funçoes_aux');
 
 //Pagina principal do adm
 router.get('/', (req, res) => {

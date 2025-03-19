@@ -52,7 +52,36 @@ function Verificar_maquina(maquina) {
     
 }
 
+function Verificar_usuario(usuario){
+    const {nome, sobrenome, email, telefone, senha, senha_2} = usuario
+
+    let erros = []
+
+    if (!nome || typeof nome !== 'string' || nome.trim().length === 0) {
+        erros.push({ texto: "1" });
+    }
+    if (!sobrenome || typeof sobrenome !== 'string' || sobrenome.trim().length === 0) {
+        erros.push({ texto: "2" });
+    }
+
+    if (!email || typeof email !== 'string' || email.trim().length === 0) {
+        erros.push({ texto: "3" });
+    }
+    if (telefone < 5) {
+        erros.push({texto: "numero precisa existir!"});
+    }
+    if (senha < 4) {
+        erros.push({texto: "senha precisa ser maior de 4 caracteres"});
+    }
+    if (senha != senha_2) {
+        erros.push({texto: "as senhas precisam ser iguais, tente novamente!"});
+    }
+    return erros;
+}
+    
+
 module.exports = {
     Verificar_comentario,
-    Verificar_maquina
+    Verificar_maquina,
+    Verificar_usuario
 };
