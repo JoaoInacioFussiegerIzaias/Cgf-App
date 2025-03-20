@@ -3,15 +3,15 @@ require('dotenv').config();
 const express = require('express')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
-const admin = require("./routes/admin")
+const admin = require("./routes/Admin")
 const path = require('path')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('connect-flash')
 require("./models/Maquina")
 const Maquina = mongoose.model("maquinas")
+
 const cgfApp = express()
-const usuarios = require('./routes/usuario') 
 
 const secret = process.env.SESSESSION_SECRET
 cgfApp.use(session({
@@ -70,7 +70,6 @@ cgfApp.get("/", (req,res) =>{
 //Admin
 cgfApp.use('/admin', admin)
 
-cgfApp.use('/usuarios', usuarios)
 
 const port = process.env.DB_PORT
 
