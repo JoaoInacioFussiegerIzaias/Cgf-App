@@ -10,6 +10,10 @@ router.get("/cadastro", (req,res) =>{
     res.render("usuarios/cadastro")
 })
 
+router.get("/login", (req,res) => {
+    res.render("usuarios/login")
+})
+
 router.post("/new/cadastro", (req, res) => {
     const { nome, sobrenome, telefone, email, senha, senha_2 } = req.body;
     const erros = Verificar_usuario({ nome, sobrenome, telefone, email, senha, senha_2 });

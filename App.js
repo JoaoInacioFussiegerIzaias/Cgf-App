@@ -8,12 +8,8 @@ const path = require('path')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('connect-flash')
-<<<<<<< HEAD
-
-=======
 require("./models/Maquina")
 const Maquina = mongoose.model("maquinas")
->>>>>>> d3d1830 (not exist)
 const cgfApp = express()
 const usuarios = require('./routes/usuario') 
 
@@ -62,10 +58,14 @@ cgfApp.use(express.static(path.join(__dirname, "public")))
 //Rotas
 
 //Home
-cgfApp.get('/', (req, res) => {
-    res.send("home")
+cgfApp.get("/", (req,res) =>{
+    Maquina.find().sort({data: 'desc'}).lean().then((maquinas) =>{
+        res.render("index", {maquinas: maquinas})
+    }).catch((err)=> {
+        req.flash("error_msg", "Houve um erro ao tentar listar a pagina")
+        res.redirect("/")
+    })
 })
-
 //Admin
 cgfApp.use('/admin', admin)
 

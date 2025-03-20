@@ -31,6 +31,17 @@ router.get('/new/comentario', (req, res) => {
     res.render("admin/newcomentarios")
 })
 
+//Rota para editar comentario
+router.get("/edit/comentario/:id", (req,res) => {
+    Comentario.findOne({_id:req.params.id}).lean()
+    .then((comentario) => {
+            res.render("admin/editcomentario", {comentario: comentario}) 
+        }).catch((err) =>{
+            req.flash("error_msg", "Esse comentario não existe")
+            res.redirect("/admin/comentarios")
+        })
+})
+
 //Rota de envio de dados para o banco 
 router.post("/new/comentario", (req, res) =>{
     const {comentario} = req.body
@@ -55,17 +66,6 @@ router.post("/new/comentario", (req, res) =>{
         req.flash("error_msg", "Houve um erro au comentar")
         res.render("admin/newcomentarios", {erros, comentario})
     }
-})
-
-//Rota para editar comentario
-router.get("/edit/comentario/:id", (req,res) => {
-    Comentario.findOne({_id:req.params.id}).lean()
-    .then((comentario) => {
-            res.render("admin/editcomentario", {comentario: comentario}) 
-        }).catch((err) =>{
-            req.flash("error_msg", "Esse comentario não existe")
-            res.redirect("/admin/comentarios")
-        })
 })
 
 //Rota para editar o comentario
@@ -131,6 +131,16 @@ router.get("/new/maquina", (req,res) =>{
     res.render("admin/newmaquina")
 })
 
+router.get("/edit/maquina/:id", (req,res) => {
+    Maquina.findOne({_id: req.params.id}).lean()
+    .then((maquina) => {
+            res.render("admin/editmaquina", {maquina: maquina}) 
+        }).catch((err) =>{
+            req.flash("error_msg", "Essa máquina não existe" )
+            res.redirect("/admin/maquinas")
+        })
+})
+
 router.post("/new/maquina", (req,res) =>{
 
     const { modelo, marca, peso, potencia, largura, altura} = req.body
@@ -157,16 +167,6 @@ router.post("/new/maquina", (req,res) =>{
         req.flash("error_msg", "Houve um erro ou salvar maquina")
         res.render("admin/newmaquina", {erros, modelo, marca, peso, potencia, largura, altura})
     }
-})
-
-router.get("/edit/maquina/:id", (req,res) => {
-    Maquina.findOne({_id: req.params.id}).lean()
-    .then((maquina) => {
-            res.render("admin/editmaquina", {maquina: maquina}) 
-        }).catch((err) =>{
-            req.flash("error_msg", "Essa máquina não existe" )
-            res.redirect("/admin/maquinas")
-        })
 })
 
 router.post("/edit/maquina", (req,res) =>{
