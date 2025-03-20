@@ -66,7 +66,6 @@ cgfApp.get("/", (req,res) =>{
         res.redirect("/")
     })
 })
-
 //Admin
 cgfApp.use('/admin', admin)
 

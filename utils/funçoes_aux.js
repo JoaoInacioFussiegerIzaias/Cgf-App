@@ -51,14 +51,18 @@ function Verificar_maquina(maquina) {
     return erros;
 }
 
+<<<<<<< HEAD
 //-------------------------------------- Função de vereficação de Usuario ----------------------------------------------// 
 
+=======
+>>>>>>> 50218bb8d4886e3134bb9945e5680db6a61b8942
 function Verificar_usuario(usuario){
     const {nome, sobrenome, email, telefone, senha, senha_2} = usuario
 
     let erros = []
 
     if (!nome || typeof nome !== 'string' || nome.trim().length === 0) {
+<<<<<<< HEAD
         erros.push({ texto: "Nome não pode ficar em branco" });
     }
     if (!sobrenome || typeof sobrenome !== 'string' || sobrenome.trim().length === 0) {
@@ -76,10 +80,33 @@ function Verificar_usuario(usuario){
     }
     if (senha != senha_2) {
         erros.push({texto: "As senhas precisam ser iguais, tente novamente!"});
+=======
+        erros.push({ texto: "1" });
+    }
+    if (!sobrenome || typeof sobrenome !== 'string' || sobrenome.trim().length === 0) {
+        erros.push({ texto: "2" });
+    }
+
+    if (!email || typeof email !== 'string' || email.trim().length === 0) {
+        erros.push({ texto: "3" });
+    }
+    if (telefone < 5) {
+        erros.push({texto: "numero precisa existir!"});
+    }
+    if (senha < 4) {
+        erros.push({texto: "senha precisa ser maior de 4 caracteres"});
+    }
+    if (senha != senha_2) {
+        erros.push({texto: "as senhas precisam ser iguais, tente novamente!"});
+>>>>>>> 50218bb8d4886e3134bb9945e5680db6a61b8942
     }
     return erros;
 }
     
+<<<<<<< HEAD
+=======
+
+>>>>>>> 50218bb8d4886e3134bb9945e5680db6a61b8942
 module.exports = {
     Verificar_comentario,
     Verificar_maquina,
