@@ -12,6 +12,9 @@ require("./models/Maquina")
 const Maquina = mongoose.model("maquinas")
 const cgfApp = express()
 const usuarios = require('./routes/usuario') 
+const passport = require("passport")
+require("./config/auth") (passport)
+
 
 const secret = process.env.SESSESSION_SECRET
 cgfApp.use(session({
@@ -19,12 +22,17 @@ cgfApp.use(session({
     resave: true,
     saveUninitialized: true
 }))
+
+cgfApp.use(passport.initialize())
+cgfApp.use(passport.session())
 cgfApp.use(flash())
 
 //Middleware
 cgfApp.use((req,res,next) =>{
     res.locals.success_msg = req.flash("success_msg")
     res.locals.error_msg = req.flash("error_msg")
+    res.locals.error = req.flash("error")
+    res.locals.user = req.user || null;
     next()
 })
 

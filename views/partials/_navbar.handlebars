@@ -16,10 +16,13 @@
           <a class="nav-link active" aria-current="page" href="">Suporte</a>
         </li>
         <li class="nav-item">
+          {{#if user}}
+          {{else}}
           <a class="nav-link active" aria-current="page" href="/usuarios/cadastro">Cadastro</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="">Login</a>
+          <a class="nav-link active" aria-current="page" href="/usuarios/login">Login</a>
+          {{/if}}
         </li>
       </ul>
     </div>

@@ -6,16 +6,16 @@ const Comentario = mongoose.model("comentarios") //Model Comentario
 require("../models/Maquina")
 const Maquina = mongoose.model("maquinas") //Model Maquina
 const { Verificar_comentario, Verificar_maquina} = require('../utils/funçoes_aux');
-
+const {eAdmin} = require("../helpers/eAdmin")
 //Pagina principal do adm
-router.get('/', (req, res) => {
+router.get('/', eAdmin, (req, res) => {
     res.render("admin/index")
 })
 
 // ------------------------------------------ Rotas Comentarios ------------------------------------- //
 
 // All comentarios
-router.get('/comentarios', (req, res) => {
+router.get('/comentarios', eAdmin, (req, res) => {
 
     //sort serve para ordenar os comentarios em ordem decresente (mais novo para o mais antigo)
     Comentario.find().sort({data: 'desc'}).lean().then((comentarios) =>{
@@ -27,12 +27,12 @@ router.get('/comentarios', (req, res) => {
 })
 
 //Rota para fazer um novo comentario
-router.get('/new/comentario', (req, res) => {
+router.get('/new/comentario',  eAdmin, (req, res) => {
     res.render("admin/newcomentarios")
 })
 
 //Rota para editar comentario
-router.get("/edit/comentario/:id", (req,res) => {
+router.get("/edit/comentario/:id", eAdmin, (req,res) => {
     Comentario.findOne({_id:req.params.id}).lean()
     .then((comentario) => {
             res.render("admin/editcomentario", {comentario: comentario}) 
@@ -43,7 +43,7 @@ router.get("/edit/comentario/:id", (req,res) => {
 })
 
 //Rota de envio de dados para o banco 
-router.post("/new/comentario", (req, res) =>{
+router.post("/new/comentario",  eAdmin, (req, res) =>{
     const {comentario} = req.body
 
     // Passa o comentário para a função Verificar
@@ -69,7 +69,7 @@ router.post("/new/comentario", (req, res) =>{
 })
 
 //Rota para editar o comentario
-router.post("/edit/comentario", (req,res) => {
+router.post("/edit/comentario", eAdmin, (req,res) => {
     const {comentario, id} = req.body
     
     // Passa o comentário para a função Verificar
@@ -107,7 +107,7 @@ router.post("/edit/comentario", (req,res) => {
     }
 })
 
-router.post("/delete/comentario", (req,res) => {
+router.post("/delete/comentario", eAdmin, (req,res) => {
     Comentario.deleteOne({_id: req.body.id}).then(() =>{
         req.flash("success_msg", "Comentario deletado com sucesso")
         res.redirect("/admin/comentarios")
@@ -119,7 +119,7 @@ router.post("/delete/comentario", (req,res) => {
 
 // ------------------------------------- Rotas Maquinas ------------------------------------- //
 
-router.get("/maquinas", (req,res) =>{
+router.get("/maquinas", eAdmin, (req,res) =>{
     Maquina.find().sort({data: 'desc'}).lean().then((maquinas) =>{
         res.render("admin/maquinas", {maquinas: maquinas})
     }).catch((err)=> {
@@ -128,11 +128,11 @@ router.get("/maquinas", (req,res) =>{
     })
 })
 
-router.get("/new/maquina", (req,res) =>{
+router.get("/new/maquina", eAdmin, (req,res) =>{
     res.render("admin/newmaquina")
 })
 
-router.get("/edit/maquina/:id", (req,res) => {
+router.get("/edit/maquina/:id", eAdmin, (req,res) => {
     Maquina.findOne({_id: req.params.id}).lean()
     .then((maquina) => {
             res.render("admin/editmaquina", {maquina: maquina}) 
@@ -142,7 +142,7 @@ router.get("/edit/maquina/:id", (req,res) => {
         })
 })
 
-router.post("/new/maquina", (req,res) =>{
+router.post("/new/maquina", eAdmin, (req,res) =>{
 
     const { modelo, marca, peso, potencia, largura, altura} = req.body
     const erros = Verificar_maquina({modelo, marca, peso, potencia, largura, altura}) 
@@ -170,7 +170,7 @@ router.post("/new/maquina", (req,res) =>{
     }
 })
 
-router.post("/edit/maquina", (req,res) =>{
+router.post("/edit/maquina", eAdmin, (req,res) =>{
     const { modelo, marca, peso, potencia, largura, altura, id} = req.body
 
     const erros = Verificar_maquina({modelo, marca, peso, potencia, largura, altura})
@@ -211,7 +211,7 @@ router.post("/edit/maquina", (req,res) =>{
 })
 
 
-router.post("/delete/maquina", (req,res) => {
+router.post("/delete/maquina", eAdmin, (req,res) => {
     Maquina.deleteOne({_id: req.body.id}).then(() =>{
         req.flash("success_msg", "Maquina deletada com sucesso")
         res.redirect("/admin/maquinas")
