@@ -12,7 +12,6 @@ router.get("/cadastro", (req,res) =>{
 
 router.post("/new/cadastro", (req, res) => {
     const { nome, sobrenome, telefone, email, senha, senha_2 } = req.body;
-    
     const erros = Verificar_usuario({ nome, sobrenome, telefone, email, senha, senha_2 });
 
     // Se houver erros de validação
@@ -30,7 +29,7 @@ router.post("/new/cadastro", (req, res) => {
             const newUsuario = new Usuario({
                 nome,
                 sobrenome,
-                numero,
+                telefone,
                 email,
                 senha,
             });
