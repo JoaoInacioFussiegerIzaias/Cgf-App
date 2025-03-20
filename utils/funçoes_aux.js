@@ -49,8 +49,9 @@ function Verificar_maquina(maquina) {
     }
 
     return erros;
-    
 }
+
+//-------------------------------------- Função de vereficação de Usuario ----------------------------------------------// 
 
 function Verificar_usuario(usuario){
     const {nome, sobrenome, email, telefone, senha, senha_2} = usuario
@@ -58,28 +59,27 @@ function Verificar_usuario(usuario){
     let erros = []
 
     if (!nome || typeof nome !== 'string' || nome.trim().length === 0) {
-        erros.push({ texto: "1" });
+        erros.push({ texto: "Nome não pode ficar em branco" });
     }
     if (!sobrenome || typeof sobrenome !== 'string' || sobrenome.trim().length === 0) {
-        erros.push({ texto: "2" });
+        erros.push({ texto: "Sobrenome não pode ficar em branco" });
     }
 
     if (!email || typeof email !== 'string' || email.trim().length === 0) {
-        erros.push({ texto: "3" });
+        erros.push({ texto: "Email não pode ficar em branco" });
     }
     if (telefone < 5) {
-        erros.push({texto: "numero precisa existir!"});
+        erros.push({texto: "Numero não pode ficar em branco"});
     }
-    if (senha < 4) {
-        erros.push({texto: "senha precisa ser maior de 4 caracteres"});
+    if (senha <= 6) {
+        erros.push({texto: "Senha precisa ter pelomenos 6 caracteres"});
     }
     if (senha != senha_2) {
-        erros.push({texto: "as senhas precisam ser iguais, tente novamente!"});
+        erros.push({texto: "As senhas precisam ser iguais, tente novamente!"});
     }
     return erros;
 }
     
-
 module.exports = {
     Verificar_comentario,
     Verificar_maquina,
