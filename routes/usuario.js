@@ -16,6 +16,14 @@ router.get("/login", (req,res) => {
     res.render("usuarios/login")
 })
 
+router.get('/logout', (req, res, next) => {
+    req.logout((err) => {
+        if (err) { return next(err) }
+        req.flash("success_msg", "Desconectado")
+        res.redirect('/')
+      })
+})
+
 router.post("/new/cadastro", (req, res) => {
     const { nome, sobrenome, telefone, email, senha, senha_2 } = req.body;
     const erros = Verificar_usuario({ nome, sobrenome, telefone, email, senha, senha_2 });
