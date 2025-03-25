@@ -12,9 +12,9 @@ router.get('/', eAdmin, (req, res) => {
     res.render("admin/index")
 })
 
-// ------------------------------------------ Rotas Comentarios ------------------------------------- //
+// ------------------------------------------ GET COMENTÁRIOS ------------------------------------- //
 
-// All comentarios
+//GET MOSTRAR COMENTÁRIOS
 router.get('/comentarios', eAdmin, (req, res) => {
 
     //sort serve para ordenar os comentarios em ordem decresente (mais novo para o mais antigo)
@@ -26,12 +26,14 @@ router.get('/comentarios', eAdmin, (req, res) => {
     })
 })
 
-//Rota para fazer um novo comentario
+
+//GET NOVO COMENTÁRIO
 router.get('/new/comentario',  eAdmin, (req, res) => {
     res.render("admin/newcomentarios")
 })
 
-//Rota para editar comentario
+
+//GET EDITAR COMENTÁRIO
 router.get("/edit/comentario/:id", eAdmin, (req,res) => {
     Comentario.findOne({_id:req.params.id}).lean()
     .then((comentario) => {
@@ -42,7 +44,9 @@ router.get("/edit/comentario/:id", eAdmin, (req,res) => {
         })
 })
 
-//Rota de envio de dados para o banco 
+// ----------------------------------------- POST COMENTÁRIO ---------------------------------------//
+
+//POST CRIAR COMENTARIO
 router.post("/new/comentario",  eAdmin, (req, res) =>{
     const {comentario} = req.body
 
@@ -68,7 +72,8 @@ router.post("/new/comentario",  eAdmin, (req, res) =>{
     }
 })
 
-//Rota para editar o comentario
+
+//POST EDITAR COMENTARIO
 router.post("/edit/comentario", eAdmin, (req,res) => {
     const {comentario, id} = req.body
     
@@ -107,6 +112,8 @@ router.post("/edit/comentario", eAdmin, (req,res) => {
     }
 })
 
+
+//POST DELETAR COMENTARIO
 router.post("/delete/comentario", eAdmin, (req,res) => {
     Comentario.deleteOne({_id: req.body.id}).then(() =>{
         req.flash("success_msg", "Comentario deletado com sucesso")

@@ -1,4 +1,7 @@
+//importação do mongodb
 const mongoose = require('mongoose')
+
+//Schema é um tipo que define como os dados serão armazenados
 const Schema = mongoose.Schema;
 
 const Maquina = new Schema({
@@ -32,6 +35,7 @@ const Maquina = new Schema({
     }
 })
 
+//chama o mongoose para registrar o medelo no banco de dados
 mongoose.model("maquinas", Maquina) 
 
 

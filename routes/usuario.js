@@ -37,7 +37,7 @@ router.post("/new/cadastro", (req, res) => {
                 sobrenome,
                 telefone,
                 email,
-                senha,
+                senha
             });
 
             bcrypt.genSalt(10, (erro, salt) => {

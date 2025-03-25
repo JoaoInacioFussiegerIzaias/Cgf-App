@@ -14,7 +14,7 @@ const cgfApp = express()
 const usuarios = require('./routes/usuario') 
 const passport = require("passport")
 require("./config/auth") (passport)
-
+require("./database/connection") 
 
 const secret = process.env.SESSESSION_SECRET
 cgfApp.use(session({
@@ -32,6 +32,8 @@ cgfApp.use((req,res,next) =>{
     res.locals.success_msg = req.flash("success_msg")
     res.locals.error_msg = req.flash("error_msg")
     res.locals.error = req.flash("error")
+    
+    //essa vareavel user ira guardar os dados do usuario logado
     res.locals.user = req.user || null;
     next()
 })
@@ -52,13 +54,13 @@ cgfApp.set('view engine', 'handlebars')
 
 
 //Mongoose connection
-mongoose.Promise = global.Promise;
-const db = process.env.DB_URL
-mongoose.connect(db).then(() => {
-    console.log("conectado ao mongo")
-}).catch((err) => {
-    console.log("Erro ao se conectar ou mongo "+ err)
-})
+//mongoose.Promise = global.Promise;
+//const db = process.env.DB_URL
+//mongoose.connect(db).then(() => {
+//    console.log("conectado ao mongo")
+//}).catch((err) => {
+//    console.log("Erro ao se conectar ou mongo "+ err)
+//})
 
 //Public
 cgfApp.use(express.static(path.join(__dirname, "public")))
