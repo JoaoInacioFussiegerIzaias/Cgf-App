@@ -1,27 +1,31 @@
-<div class="row mt-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
     {{#each maquinas}}
-    <div class="col-12 col-sm-6 col-md-4 mb-4"> <!-- Ajuste para várias colunas -->
-        <div class="card p-2">
-            <img src="https://www.guiasobratema.org.br/Imagens/Fotos/DSC06274-2_recortada.png" alt="YAMAHA VIO17">
-            <!-- Modelo e Marca -->
-            <h1>{{modelo}}</h1>
-            <p><strong>Marca:</strong> {{marca}}</p>
+    <div class="bg-white p-4 rounded-lg shadow-lg">
+        <img src="https://www.guiasobratema.org.br/Imagens/Fotos/DSC06274-2_recortada.png" alt="YAMAHA VIO17" class="w-full h-48 object-cover rounded-t-lg">
+        <!-- Modelo e Marca -->
+        <h1 class="text-xl font-semibold mt-4">{{modelo}}</h1>
+        <p class="text-gray-700"><strong>Marca:</strong> {{marca}}</p>
 
-            <!-- Peso -->
-            <p><strong>Peso:</strong> {{peso}} (kg)</p>
+        <!-- Peso -->
+        <p class="text-gray-700"><strong>Peso:</strong> {{peso}} (kg)</p>
 
-            <!-- Potência -->
-            <p><strong>Potência:</strong> {{potencia}} (kw)</p>
+        <!-- Potência -->
+        <p class="text-gray-700"><strong>Potência:</strong> {{potencia}} (kw)</p>
 
-            <!-- Altura -->
-            <p><strong>Altura:</strong> {{altura}} (mm)</p>
+        <!-- Altura -->
+        <p class="text-gray-700"><strong>Altura:</strong> {{altura}} (mm)</p>
 
-            <!-- Largura -->
-            <p><strong>Largura:</strong> {{largura}} (mm)</p>
-        </div>
+        <!-- Largura -->
+        <p class="text-gray-700"><strong>Largura:</strong> {{largura}} (mm)</p>
     </div>
     {{else}}
-    <h2 class="mt-2">Nenhuma máquina cadastrada</h2>
+    <h2 class="mt-2 text-center text-lg">Nenhuma máquina cadastrada</h2>
     {{/each}}
 </div>
-<a href="#"><button class="btn btn-secondary">Solicitar orçamento</button></a>
+
+<!-- Solicitar orçamento button -->
+<a href="#" class="block mt-4 text-center">
+    <button class="px-6 py-2 bg-gray-600 text-white font-semibold rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">
+        Solicitar orçamento
+    </button>
+</a>

@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link href="/src/styles.css" rel="stylesheet">
+    <!-- Add Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>CGF Escavações</title>
 </head>
-<body>
+<body class="bg-gray-100">
     {{>_navbar}}
-    <div class="container mt-4">
+    <div class="container mx-auto mt-4 px-4">
         {{#if error}}
-            <div class="alert alert-danger">{{error}}</div>
+            <div class="alert alert-danger bg-red-500 text-white p-4 rounded-md mb-4">
+                {{error}}
+            </div>
         {{else}}
 
         {{/if}}
         {{>_msg}}
-        {{{body}}} 
+        <div class="content-body mt-4">
+            {{{body}}}
+        </div> 
     </div>
 </body>
-<script src="/js/bootstrap.js"></script>
 </html>

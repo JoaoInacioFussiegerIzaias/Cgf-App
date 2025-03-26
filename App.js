@@ -16,6 +16,7 @@ const passport = require("passport")
 require("./config/auth") (passport)
 require("./database/connection") 
 
+//que a sessão seja única e não manipulada por usuários mal-intencionados
 const secret = process.env.SESSESSION_SECRET
 cgfApp.use(session({
     secret: secret,
@@ -23,6 +24,7 @@ cgfApp.use(session({
     saveUninitialized: true
 }))
 
+//inicialize o passaport
 cgfApp.use(passport.initialize())
 cgfApp.use(passport.session())
 cgfApp.use(flash())

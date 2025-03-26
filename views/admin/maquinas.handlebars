@@ -1,41 +1,48 @@
-<h1>Lista de Máquinas</h1>
-<hr>
-<a href="/admin/new/maquina"><button class="btn btn-success">Nova Máquina</button></a>
+<h1 class="text-2xl font-semibold mb-4">Lista de Máquinas</h1>
+<hr class="my-4">
+<a href="/admin/new/maquina">
+    <button class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+        Nova Máquina
+    </button>
+</a>
 
-<div class="row mt-4">
+<div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4">
     {{#each maquinas}}
-    <div class="col-12 col-sm-6 col-md-4 mb-4"> <!-- Ajuste para várias colunas -->
-        <div class="card p-3">
-            <img src="https://www.guiasobratema.org.br/Imagens/Fotos/DSC06274-2_recortada.png" alt="YAMAHA VIO17">
-            <!-- Modelo e Marca -->
-            <h1>{{modelo}}</h1>
-            <p><strong>Marca:</strong> {{marca}}</p>
+    <div class="bg-white p-4 rounded-lg shadow-md w-90">
+        <img src="https://www.guiasobratema.org.br/Imagens/Fotos/DSC06274-2_recortada.png" alt="YAMAHA VIO17" class=" rounded-md mb-4">
+        
+        <!-- Modelo e Marca -->
+        <h2 class="text-xl font-semibold">{{modelo}}</h2>
+        <p><strong>Marca:</strong> {{marca}}</p>
 
-            <!-- Peso -->
-            <p><strong>Peso:</strong> {{peso}} (kg)</p>
+        <!-- Peso -->
+        <p><strong>Peso:</strong> {{peso}} kg</p>
 
-            <!-- Potência -->
-            <p><strong>Potência:</strong> {{potencia}} (kw)</p>
+        <!-- Potência -->
+        <p><strong>Potência:</strong> {{potencia}} kW</p>
 
-            <!-- Altura -->
-            <p><strong>Altura:</strong> {{altura}} (mm)</p>
+        <!-- Altura -->
+        <p><strong>Altura:</strong> {{altura}} mm</p>
 
-            <!-- Largura -->
-            <p><strong>Largura:</strong> {{largura}} (mm)</p>
+        <!-- Largura -->
+        <p><strong>Largura:</strong> {{largura}} mm</p>
 
-            <!-- Botões de Editar e Deletar -->
-            <div class="d-flex justify-content-between mt-3">
-                <a href="/admin/edit/maquina/{{_id}}"><button class="btn btn-success btn-sm">Editar</button></a>
-                <form action="/admin/delete/maquina" method="POST" class="d-inline">
-                    <input type="hidden" name="id" value="{{_id}}">
-                    <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
-                </form>
-            </div>
+        <!-- Botões de Editar e Deletar -->
+        <div class="mt-4">
+            <a href="/admin/edit/maquina/{{_id}}">
+                <button class="bg-green-600 text-white py-1 px-3 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm">
+                    Editar
+                </button>
+            </a>
+            <form action="/admin/delete/maquina" method="POST" class="inline-block">
+                <input type="hidden" name="id" value="{{_id}}">
+                <button type="submit" class="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm">
+                    Deletar
+                </button>
+            </form>
         </div>
     </div>
     {{else}}
-    <h2 class="mt-2">Nenhuma máquina cadastrada</h2>
+    <h2 class="mt-2 text-xl font-semibold">Nenhuma máquina cadastrada</h2>
     {{/each}}
 </div>
-
-

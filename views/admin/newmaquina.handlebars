@@ -1,33 +1,51 @@
 {{#if erros}}
     {{#each erros}}
-        <div class="alert alert-danger">
+        <div class="bg-red-500 text-white p-4 mb-4 rounded-md">
             {{texto}}
         </div>
     {{/each}}
 {{/if}}
 
 {{#if success_msg}}
-    <div class="alert alert-success">
+    <div class="bg-green-500 text-white p-4 mb-4 rounded-md">
         {{success_msg}}
     </div>
 {{/if}}
-<div class="card">
-    <div class="card-body">
-        <h1>Maquina</h1>
-        <form action="/admin/new/maquina" method="POST">
-            <label for="modelo">Modelo: </label>
-            <input type="text" name="modelo" class="form-control">
-            <label for="marca">Marca:</label>
-            <input type="text" name="marca" class="form-control">
-            <label for="peso">Peso</label>
-            <input type="number" name="peso" step="0.00001" class="form-control">
-            <label for="potencia">Potência</label>
-            <input type="number" name="potencia" step="0.00001" class="form-control">
-            <label for="altura">Altura</label>
-            <input type="text" name="altura" class="form-control">
-            <label for="largura">Largura</label>
-            <input type="number" name="largura" step="0.00001" class="form-control">
-            <button class="btn btn-success mt-4" type="submit">Criar máquinas</button>
+
+<div class="flex items-center justify-center bg-gray-100 mt-20">
+    <div class="max-w-sm w-full bg-white p-6 rounded-lg shadow-lg">
+        <form action="/admin/new/maquina" method="POST" class="w-full max-w-md">
+            <div class="mb-4 text-center">
+                <h1 class="text-2xl font-semibold">Máquina</h1>
+            </div>
+            <div class="mb-4">
+                <label for="modelo" class="block text-sm font-medium text-gray-700">Modelo:</label>
+                <input type="text" name="modelo" class="w-full p-3 border border-gray-300 rounded-md mt-2" required>
+            </div>
+            <div class="mb-4">
+                <label for="marca" class="block text-sm font-medium text-gray-700">Marca:</label>
+                <input type="text" name="marca" class="w-full p-3 border border-gray-300 rounded-md mt-2" required>
+            </div>
+            <div class="mb-4">
+                <label for="peso" class="block text-sm font-medium text-gray-700">Peso:</label>
+                <input type="number" name="peso" step="0.00001" class="w-full p-3 border border-gray-300 rounded-md mt-2" required>
+            </div>
+            <div class="mb-4">
+                <label for="potencia" class="block text-sm font-medium text-gray-700">Potência:</label>
+                <input type="number" name="potencia" step="0.00001" class="w-full p-3 border border-gray-300 rounded-md mt-2" required>
+            </div>
+            <div class="mb-4">
+                <label for="altura" class="block text-sm font-medium text-gray-700">Altura:</label>
+                <input type="text" name="altura" class="w-full p-3 border border-gray-300 rounded-md mt-2" required>
+            </div>
+            <div class="mb-4">
+                <label for="largura" class="block text-sm font-medium text-gray-700">Largura:</label>
+                <input type="number" name="largura" step="0.00001" class="w-full p-3 border border-gray-300 rounded-md mt-2" required>
+            </div>
+            <button type="submit" class="w-full py-3 bg-green-600 text-white font-semibold rounded-md mt-4 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                Criar máquinas
+            </button>
         </form>
     </div>
 </div>
+
