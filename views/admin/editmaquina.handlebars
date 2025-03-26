@@ -1,26 +1,57 @@
-{{#each erros}}
-    <div class="alert alert-danger">{{texto}}</div>
-{{else}}
+{{#if erros}}
+    {{#each erros}}
+        <div class="bg-red-500 text-white p-4 mb-4 rounded-md">
+            {{texto}}
+        </div>
+    {{/each}}
+{{/if}}
 
-{{/each}}
-<h2>Editar máquina</h2>
-<div class="card">
-    <div class="card-body">
-   <form action="/admin/edit/maquina" method="POST">
-        <input type="hidden" name="id" value="{{maquina._id}}">
-        <label for="modelo">Modelo: </label>
-        <input type="text" id="modelo" name="modelo" class="form-control" value="{{maquina.modelo}}">
-        <label for="marca">Marca:</label>
-        <input type="text" id="marca" name="marca" class="form-control" value="{{maquina.marca}}">
-        <label for="peso">Peso</label>
-        <input type="number" id="peso" name="peso" step="0.001" class="form-control" value="{{maquina.peso}}">
-        <label for="potencia">Potência</label>
-        <input type="number" id="potencia" name="potencia" step="0.001" class="form-control" value="{{maquina.potencia}}">
-        <label for="altura">Altura</label>
-        <input type="number" id="altura" name="altura" step="0.001" class="form-control" value="{{maquina.altura}}">
-        <label for="largura">Largura</label>
-        <input type="text" id="largura" name="largura" class="form-control" value="{{maquina.largura}}">
-        <a href=""><button class="btn btn-success mt-4" type="submit">Editar máquinas</button></a>
-    </form>
+{{#if success_msg}}
+    <div class="bg-green-500 text-white p-4 mb-4 rounded-md">
+        {{success_msg}}
+    </div>
+{{/if}}
+
+
+<div class="flex items-center justify-center bg-gray-100 mt-20">
+    <div class="max-w-sm w-full bg-white p-6 rounded-lg shadow-lg">
+        <form action="/admin/edit/maquina" method="POST" class="space-y-4">
+        <h2 class="text-2xl font-semibold mb-4">Editar máquina</h2>
+            <input type="hidden" name="id" value="{{maquina._id}}">
+            
+            <div class="mb-4">
+                <label for="modelo" class="block text-sm font-medium text-gray-700">Modelo:</label>
+                <input type="text" id="modelo" name="modelo" class="mt-2 p-2 w-full border border-gray-300 rounded-md" value="{{maquina.modelo}}">
+            </div>
+
+            <div class="mb-4">
+                <label for="marca" class="block text-sm font-medium text-gray-700">Marca:</label>
+                <input type="text" id="marca" name="marca" class="mt-2 p-2 w-full border border-gray-300 rounded-md" value="{{maquina.marca}}">
+            </div>
+
+            <div class="mb-4">
+                <label for="peso" class="block text-sm font-medium text-gray-700">Peso:</label>
+                <input type="number" id="peso" name="peso" step="0.001" class="mt-2 p-2 w-full border border-gray-300 rounded-md" value="{{maquina.peso}}">
+            </div>
+
+            <div class="mb-4">
+                <label for="potencia" class="block text-sm font-medium text-gray-700">Potência:</label>
+                <input type="number" id="potencia" name="potencia" step="0.001" class="mt-2 p-2 w-full border border-gray-300 rounded-md" value="{{maquina.potencia}}">
+            </div>
+
+            <div class="mb-4">
+                <label for="altura" class="block text-sm font-medium text-gray-700">Altura:</label>
+                <input type="number" id="altura" name="altura" step="0.001" class="mt-2 p-2 w-full border border-gray-300 rounded-md" value="{{maquina.altura}}">
+            </div>
+
+            <div class="mb-4">
+                <label for="largura" class="block text-sm font-medium text-gray-700">Largura:</label>
+                <input type="text" id="largura" name="largura" class="mt-2 p-2 w-full border border-gray-300 rounded-md" value="{{maquina.largura}}">
+            </div>
+
+            <div class="text-center">
+                <button class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700" type="submit">Editar máquina</button>
+            </div>
+        </form>
     </div>
 </div>
