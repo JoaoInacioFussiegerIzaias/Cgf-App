@@ -1,18 +1,23 @@
-<h1>Comentarios sobre: </h1>
-<hr>
-<a href="/admin/new/comentario"><button class="btn btn-success">Comentar</button></a>
+<h1 class="text-3xl font-semibold mb-4">Comentários sobre:</h1>
+<hr class="mb-4">
+<a href="/admin/new/comentario">
+    <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition">Comentar</button>
+</a>
 
 {{#each comentarios}}
-    <div class="card mt-4">
+    <div class="bg-white shadow-md rounded-lg p-6 mt-4">
         <div class="card-body">
-            <h4>{{comentario}}</h4> <small>Data de criação {{data}}</small><br>
-            <a href="/admin/edit/comentario/{{_id}}"><button class="btn btn-success mt-2">Editar</button></a>
-            <form action="/admin/delete/comentario" method="POST">
+            <h4 class="text-xl font-semibold">{{comentario}}</h4>
+            <small class="text-gray-500">Data de criação {{data}}</small><br>
+            <a href="/admin/edit/comentario/{{_id}}">
+                <button class="bg-green-500 text-white px-4 py-2 rounded-md mt-2 hover:bg-green-600 transition">Editar</button>
+            </a>
+            <form action="/admin/delete/comentario" method="POST" class="mt-2">
                 <input type="hidden" name="id" value="{{_id}}">
-                <button type="submit" class="btn btn-danger mt-2">Deletar</button>
+                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">Deletar</button>
             </form>
         </div>
     </div>
 {{else}}
-    <h2 class="mt-2">Nem um comentarios postado</h2>
+    <h2 class="text-xl mt-2 text-gray-500">Nenhum comentário postado</h2>
 {{/each}}

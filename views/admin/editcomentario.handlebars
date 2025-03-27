@@ -1,16 +1,17 @@
 {{#each erros}}
-    <div class="alert alert-danger">{{texto}}</div>
+    <div class="bg-red-100 text-red-800 p-4 rounded-md mb-4">{{texto}}</div>
 {{else}}
 
 {{/each}}
-<h2>Editar comentário</h2>
-<div class="card">
-    <div class="card-body">
+
+<h2 class="text-2xl font-semibold mb-4">Editar comentário</h2>
+<div class="bg-white shadow-md rounded-lg p-6">
     <form action="/admin/edit/comentario" method="POST">
         <input type="hidden" name="id" value="{{comentario._id}}">
-        <label for="comentario">Comentar</label>
-        <input type="text" id="comentario" name="comentario" placeholder="Comente aqui" class="form-control" value="{{comentario.comentario}}">
-        <a href=""><button class="submit btn btn-success form-control mt-4" >Comentar</button></a>  
+        
+        <label for="comentario" class="block text-sm font-medium text-gray-700">Comentar</label>
+        <input type="text" id="comentario" name="comentario" placeholder="Comente aqui" class="mt-2 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{comentario.comentario}}">
+
+        <button type="submit" class="mt-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition w-full">Comentar</button>
     </form>
-    </div>
 </div>
